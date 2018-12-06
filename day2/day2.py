@@ -1,6 +1,7 @@
 #--- Day 2: Inventory Management System ---
 
-id_list = open('C:/Users/Aoi_B/Documents/adventofcode2018/day2/input.txt', 'r')
+with open('C:/Users/Aoi_B/Documents/adventofcode2018/day2/input.txt', 'r') as myfile:
+    id_list=myfile.read().replace('\n', '')
 
 def findPatterns(box_id):
     letter_list = []
@@ -38,6 +39,7 @@ def run_scan(target_ids):
             two_id_count = two_id_count + 1
         if scan_result == '2':
             three_id_count = three_id_count + 1
+    print('')
     print("The final checksum is : " + str(three_id_count * two_id_count))
     
 run_scan(id_list)
