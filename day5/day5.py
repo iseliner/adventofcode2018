@@ -8,24 +8,53 @@ Created on Wed Dec  5 10:22:08 2018
 with open('C:/Users/Aoi_B/Documents/adventofcode2018/day5/input.txt', 'r') as myfile:
     polymer=myfile.read().replace('\n', '')
 
-word = "Chupacabra"
-word = word[:2]+[4]
+old_length = len(polymer)
 
-x = 0
-while x < len(polymer):
-    if x != len(polymer)-1:
-        if polymer[x].lower() == polymer[x+1].lower():
-            if polymer[x] != polymer[x+1]:
-                polymer = polymer[:x-1] + polymer[x+2:]
-                print('removed: ' + str(polymer[x]) + str(polymer[x+1]))
-                x = 0
+def reactPolymer(polymer):
+    x = 0
+    while x < len(polymer):
+        if x != len(polymer)-1:
+            if polymer[x].lower() == polymer[x+1].lower():
+                if polymer[x] != polymer[x+1]:
+                    polymer = polymer[:x] + polymer[x+2:]
+                    x = 0
+                else:
+                    x = x + 1
             else:
                 x = x + 1
         else:
             x = x + 1
-    else:
-        x = x + 1
-print('The remaining polymer is: ' + str(polymer))
-print(len(polymer))
-        
+    return polymer
+
+def optimalPolymerEvaluator(element, polymer):
+        experiment_polymer = polymer.replace(str(element),'')
+        experiment_polymer = polymer.replace(str(element.upper()),'')
+        return experiment_polymer
+    
+def polymerImprovementDevice(polymer):
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    optimal_length = 100000
+    optimal_element = ''
+    for letter in alphabet:
+        experiment_polymer = optimalPolymerEvaluator(letter, polymer)
+        new_polymer = reactPolymer(experiment_polymer)
+        print(len(new_polymer))
+        if len(new_polymer) < optimal_length:
+            optimal_length = len(new_polymer)
+            optimal_element = letter
+    print("After extensive experimentation the most optimal polymer improvement is removing " +
+          optimal_element + " from the polymer, resulting in polymer length " + str(optimal_length)
+          + "!")
+    
+polymerImprovementDevice(polymer)
+
+
+
+
+
+
+
+
+
+
 
